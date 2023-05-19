@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.product.ProductManagement.dto.PatchRequest;
 import com.product.ProductManagement.entity.Products;
 import com.product.ProductManagement.entity.UpdateRequest;
 import com.product.ProductManagement.repository.ProductRepository;
@@ -59,32 +61,63 @@ public class ProductAPI {
 		
 	}
 	
-	@PutMapping("/updateProducts")
-	public ResponseEntity<String> updateProducts(@RequestBody UpdateRequest updateRequest){
+	
+	@PutMapping("/updateProduct")
+	public ResponseEntity<String> updateProduct(@RequestBody Products products){
+		
+		String result = "";
+		HttpStatus httpStatus = HttpStatus.CREATED;
 		
 		List<Products> productList = productRepository.findAll();
-		List<String> result = new ArrayList<>();
 		
-		productList.forEach(productData -> {
-			if(productData.getProductCombinationId() == updateRequest.getProductCombinationId()) {
-				productData.getProductList().forEach(product -> {
-					if(product.getProductId() == updateRequest.getProductId()) {
-						product = updateRequest.getProduct();
-						result.add("Updated");
-					}
+		List<Integer> ids = new ArrayList<>();
+				
+		productList.forEach(product ->
+		    ids.add(product.getId())
+		);
+		
+       try {
+    	   
+    	   if(ids.contains(products.getId())) {
+    		   productRepository.save(products);
+   			   result = "Updated";
+    	   } else {
+    		   result = "Data not fount";
+    	   }
+			
+			
+		} catch (Exception e) {
+			result = "Failed";
+			httpStatus = HttpStatus.BAD_REQUEST;
+		}
+       
+       
+       return new ResponseEntity<String>(result,httpStatus);
+	}
+	
+	
+	// for the given id update title for all the products
+	// in PUT API we update the whole object in database
+	// while in patch API our aim is to update only some of the attributes
+	
+	@PatchMapping("/patchProduct")
+	public ResponseEntity<Void> patchProduct(@RequestBody PatchRequest patchRequest){
+		
+		List<Products> productList =  productRepository.findAll();
+		HttpStatus httpStatus = HttpStatus.CREATED;
+		
+		productList.forEach(product -> {
+			if(product.getId() == patchRequest.getId()) {
+				product.getProductList().forEach(productElement -> {
+					productElement.setTitle(patchRequest.getTitle());
+					productRepository.save(product);
 				});
 			}
-			
 		});
 		
-		productRepository.save(productList.get(0));
-		
-		if(result == null) {
-			return new ResponseEntity<>("Nothing is there to update", HttpStatus.ACCEPTED);
-		} else {
-			return new ResponseEntity<>("Updated " + result.size() + " records", HttpStatus.ACCEPTED);
-		}
-		
+		return new ResponseEntity<>(httpStatus);
+	
+	
 	}
 	
 

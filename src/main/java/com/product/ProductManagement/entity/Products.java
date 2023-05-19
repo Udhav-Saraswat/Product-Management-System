@@ -10,7 +10,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Document(collection = "Products")
 public class Products {
 	
-	private Integer productCombinationId; 
+	@Id
+	private Integer id; 
 	
 	@JsonProperty("products")
 	private List<Product> productList;
@@ -23,12 +24,12 @@ public class Products {
 		this.productList = productList;
 	}
 
-	public Integer getProductCombinationId() {
-		return productCombinationId;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setProductCombinationId(Integer productCombinationId) {
-		this.productCombinationId = productCombinationId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	
