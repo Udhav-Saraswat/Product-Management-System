@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.product.ProductManagement.dto.DeleteRequest;
 import com.product.ProductManagement.dto.PatchRequest;
 import com.product.ProductManagement.entity.Products;
 import com.product.ProductManagement.entity.UpdateRequest;
@@ -119,6 +121,13 @@ public class ProductAPI {
 		return new ResponseEntity<>(httpStatus);
 	
 	
+	}
+	
+	
+	@DeleteMapping("/deleteProduct")
+	public ResponseEntity<Void> deleteProduct(@RequestBody DeleteRequest deleteRequest){
+		productRepository.deleteById(deleteRequest.getId());
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 
