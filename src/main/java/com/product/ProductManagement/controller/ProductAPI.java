@@ -95,6 +95,7 @@ public class ProductAPI {
        return new ResponseEntity<String>(result,httpStatus);
 	}
 	
+	/* Patch API */
 	
 	// for the given id update title for all the products
 	// in PUT API we update the whole object in database
