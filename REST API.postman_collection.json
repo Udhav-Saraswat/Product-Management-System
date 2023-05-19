@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "34c5aabf-c603-4292-b5ed-a4954c76185b",
+		"name": "REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20321718"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/product/addProduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productCombinationId\": 1,\r\n    \"products\": [\r\n        {\r\n            \"productId\": 1,\r\n            \"SKU\": \"HEH-2245\",\r\n            \"title\": \"iPhone 9\",\r\n            \"description\": \"An apple mobile which is nothing like apple\",\r\n            \"price\": 549,\r\n            \"discountPercentage\": 12.96,\r\n            \"stock\": 94,\r\n            \"brand\": \"Apple\",\r\n            \"category\": \"smartphones\",\r\n            \"badges\": \"Exclusive|Clearance\",\r\n            \"avgRating\": 4.5,\r\n            \"rating\": 10,\r\n            \"inventoryCount\": 8\r\n        },\r\n        {\r\n            \"productId\": 10,\r\n            \"SKU\": \"HEH-2245\",\r\n            \"title\": \"iPhone 10\",\r\n            \"description\": \"An apple mobile which is nothing like apple\",\r\n            \"price\": 549,\r\n            \"discountPercentage\": 12.96,\r\n            \"stock\": 94,\r\n            \"brand\": \"Apple\",\r\n            \"category\": \"smartphones\",\r\n            \"badges\": \"Exclusive|Clearance\",\r\n            \"avgRating\": 4.5,\r\n            \"rating\": 10,\r\n            \"inventoryCount\": 8\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/product/addProduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"addProduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/product/addProduct Copy",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"products\": [\r\n        {\r\n            \"productId\": 1,\r\n            \"SKU\": \"HEH-2245\",\r\n            \"title\": \"Samsung\",\r\n            \"description\": \"An apple mobile which is nothing like apple\",\r\n            \"price\": 549,\r\n            \"discountPercentage\": 12.96,\r\n            \"stock\": 94,\r\n            \"brand\": \"Apple\",\r\n            \"category\": \"smartphones\",\r\n            \"badges\": \"Exclusive|Clearance\",\r\n            \"avgRating\": 4.5,\r\n            \"rating\": 10,\r\n            \"inventoryCount\": 8\r\n        },\r\n        {\r\n            \"productId\": 10,\r\n            \"SKU\": \"HEH-2245\",\r\n            \"title\": \"iPhone 10\",\r\n            \"description\": \"An apple mobile which is nothing like apple\",\r\n            \"price\": 549,\r\n            \"discountPercentage\": 12.96,\r\n            \"stock\": 94,\r\n            \"brand\": \"Apple\",\r\n            \"category\": \"smartphones\",\r\n            \"badges\": \"Exclusive|Clearance\",\r\n            \"avgRating\": 4.5,\r\n            \"rating\": 10,\r\n            \"inventoryCount\": 8\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/product/updateProduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"updateProduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/product/addProduct Copy 2",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"title\" : \"Nokia\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/product/patchProduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"patchProduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/product/addProduct Copy 3",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"title\" : \"Nokia\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/product/patchProduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"patchProduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/product/addProduct",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product/getProducts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"getProducts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
