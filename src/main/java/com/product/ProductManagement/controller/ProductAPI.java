@@ -1,7 +1,5 @@
 package com.product.ProductManagement.controller;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,50 +14,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.product.ProductManagement.dto.ProductDTO;
 import com.product.ProductManagement.dto.DeleteRequest;
 import com.product.ProductManagement.dto.PatchRequest;
 import com.product.ProductManagement.entity.Products;
-import com.product.ProductManagement.entity.UpdateRequest;
-import com.product.ProductManagement.repository.ProductRepository;
+import com.product.ProductManagement.intrface.service.ProductServiceInterface;
 
 @RestController
 @RequestMapping("product")
 public class ProductAPI {
 	
-	
 	@Autowired
-	ProductRepository productRepository;
+	ProductServiceInterface productService;
 	
 	
 	@PostMapping("/addProduct")
 	public ResponseEntity<String> addProduct(@RequestBody Products products){
 		
-		String result = "";
-		HttpStatus httpStatus = HttpStatus.CREATED;
+		ProductDTO addProduct = productService.addProduct(products);
 		
-		products.getProductList().forEach(product -> {
-			product.setCreatedDate(LocalDate.now());
-		});
-		
-		try {
-			
-			productRepository.save(products);
-			result = "SAVED";
-			
-		} catch (Exception e) {
-			result = "Failed";
-			httpStatus = HttpStatus.BAD_REQUEST;
-		}
-		
-		return new ResponseEntity<String>(result,httpStatus);
+		return new ResponseEntity<String>(addProduct.getResult(),addProduct.getHttpStatus());
 	}
 	
 	@GetMapping("/getProducts")
 	public ResponseEntity<List<Products>> getAllProducts(){
-		
-		List<Products> productList = productRepository.findAll();
-		
-		return new ResponseEntity<>(productList,HttpStatus.ACCEPTED);
+	
+		return new ResponseEntity<>(productService.getProduct(),HttpStatus.ACCEPTED);
 		
 	}
 	
@@ -67,34 +47,8 @@ public class ProductAPI {
 	@PutMapping("/updateProduct")
 	public ResponseEntity<String> updateProduct(@RequestBody Products products){
 		
-		String result = "";
-		HttpStatus httpStatus = HttpStatus.CREATED;
-		
-		List<Products> productList = productRepository.findAll();
-		
-		List<Integer> ids = new ArrayList<>();
-				
-		productList.forEach(product ->
-		    ids.add(product.getId())
-		);
-		
-       try {
-    	   
-    	   if(ids.contains(products.getId())) {
-    		   productRepository.save(products);
-   			   result = "Updated";
-    	   } else {
-    		   result = "Data not fount";
-    	   }
-			
-			
-		} catch (Exception e) {
-			result = "Failed";
-			httpStatus = HttpStatus.BAD_REQUEST;
-		}
-       
-       
-       return new ResponseEntity<String>(result,httpStatus);
+	   ProductDTO updateProduct = productService.updateproduct(products);
+       return new ResponseEntity<String>(updateProduct.getResult(),updateProduct.getHttpStatus());
 	}
 	
 	/* Patch API */
@@ -106,19 +60,8 @@ public class ProductAPI {
 	@PatchMapping("/patchProduct")
 	public ResponseEntity<Void> patchProduct(@RequestBody PatchRequest patchRequest){
 		
-		List<Products> productList =  productRepository.findAll();
-		HttpStatus httpStatus = HttpStatus.CREATED;
-		
-		productList.forEach(product -> {
-			if(product.getId() == patchRequest.getId()) {
-				product.getProductList().forEach(productElement -> {
-					productElement.setTitle(patchRequest.getTitle());
-					productRepository.save(product);
-				});
-			}
-		});
-		
-		return new ResponseEntity<>(httpStatus);
+	    HttpStatus responseStatus =  productService.patchProduct(patchRequest);
+		return new ResponseEntity<>(responseStatus);
 	
 	
 	}
@@ -126,8 +69,8 @@ public class ProductAPI {
 	
 	@DeleteMapping("/deleteProduct")
 	public ResponseEntity<Void> deleteProduct(@RequestBody DeleteRequest deleteRequest){
-		productRepository.deleteById(deleteRequest.getId());
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		 HttpStatus responseStatus = productService.deleteProduct(deleteRequest);
+		return new ResponseEntity<>(responseStatus);
 	}
 	
 
